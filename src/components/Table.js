@@ -26,7 +26,7 @@ class Table extends Component {
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.props.refresh_points([])
-                    PointsService.delete_points();
+                    PointsService.delete_points(this.props.keycloak);
                 }
             })
         }else Swal.fire(
@@ -54,9 +54,9 @@ class Table extends Component {
                 <div className="tbl-content">
                     <table cellPadding="0" cellSpacing="0" border="0">
                         <tbody>
-                        {this.props.points.reverse().map((point) => {
+                        {this.props.points.reverse().map((point, index) => {
                             return (
-                                <tr>
+                                <tr key={index} >
                                     <td>{Math.round(point.x * 100) / 100}</td>
                                     <td>{Math.round(point.y * 100) / 100}</td>
                                     <td>{point.r}</td>

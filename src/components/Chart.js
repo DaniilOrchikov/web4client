@@ -5,8 +5,7 @@ import {Point} from "../utils/Point";
 class Chart extends Component {
 
     componentDidMount() {
-        PointsService.refresh_points().then(res => {
-            console.log(res.data[0])
+        PointsService.refresh_points(this.props.keycloak).then(res => {
             this.props.refresh_points(res.data.map((point) => {
                 return new Point(point.x, point.y, point.r, point.hit)
             }))
@@ -14,12 +13,12 @@ class Chart extends Component {
     }
     submit_click = (event) => {
         const rect = document.getElementById("chart").getBoundingClientRect();
-        let x = event.clientX - rect.left; //x position within the element.
+        let x = event.clientX - rect.left;
         let y = event.clientY - rect.top;
         x = (x - 144 - 36) / (144 / this.props.r)
         y = (y - 144 - 36) / (-144 / this.props.r)
         let r = this.props.r
-        PointsService.post_point(x, y, r).then(res => {
+        PointsService.post_point(x, y, r, this.props.keycloak).then(res => {
             this.props.add_point(new Point(x, y, r, res))
         });
     }
@@ -27,14 +26,14 @@ class Chart extends Component {
         return (
             <svg height="360" width="360" id="chart" onClick={this.submit_click}>
                 <path d="M 180 180 H 324 L 324 36 L 180 36 L 108 180 A 72 72 0 0 0 180 252 Z"></path>
-                {this.props.points.map((point) => {
+                {this.props.points.map((point, index) => {
                     return (
-                        <P x={point.x} y={point.y} r={this.props.r} hit={point.hit}/>
+                        <ComponentPoint key={index} x={point.x} y={point.y} r={this.props.r} hit={point.hit}/>
                     )
                 })}
-                <line stroke="black" x1="0" y1="180" x2="360" y2="180"/>
+                <line stroke="black" strokeWidth={"2"} x1="0" y1="180" x2="360" y2="180"/>
                 <polygon fill="black" points="360, 180 348, 174 348, 186"/>
-                <line stroke="black" x1="180" y1="0" x2="180" y2="360"/>
+                <line stroke="black" strokeWidth={"2"} x1="180" y1="0" x2="180" y2="360"/>
                 <polygon fill="black" points="180, 0 174, 12 186, 12"/>
 
                 <line stroke="black" x1="252" y1="174" x2="252" y2="186"/>
@@ -50,8 +49,8 @@ class Chart extends Component {
                 <line stroke="black" x1="174" y1="36" x2="186" y2="36"/>
 
                 <text fill="black" x="20" y="168" className="-R">{-this.props.r}</text>
-                <text fill="black" x="90" y="168" className="-0.5R">{-this.props.r * 0.5}</text>
-                <text fill="black" x="230" y="168" className="0.5R">{this.props.r * 0.5}</text>
+                <text fill="black" x="88" y="168" className="-0.5R">{-this.props.r * 0.5}</text>
+                <text fill="black" x="238" y="168" className="0.5R">{this.props.r * 0.5}</text>
                 <text fill="black" x="315" y="168" className="R">{this.props.r}</text>
 
                 <text fill="black" x="192" y="42" className="R">{this.props.r}</text>
@@ -63,7 +62,7 @@ class Chart extends Component {
     }
 }
 
-function P({x, y, r, hit}) {
+function ComponentPoint({x, y, r, hit}) {
     return (
         <circle className={hit ? "hit" : "not_hit"}
                 cx={x * (144 / r) + 144 + 36}

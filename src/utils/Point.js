@@ -1,4 +1,3 @@
-
 export class Point {
     constructor(x, y, r, hit=false) {
         this.x = x

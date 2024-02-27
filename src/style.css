@@ -1,3 +1,12 @@
+:root{
+    --font-size: 20px;
+}
+@media (max-width: 674px) {
+    :root{
+        --font-size: 25px;
+    }
+}
+
 @font-face {
     font-family: 'BrassMono';
     src: url('fonts/BrassMono-Bold.ttf') format('truetype');
@@ -13,25 +22,71 @@ html {
 
 body {
     background: linear-gradient(70deg, #383f75 0%, #a686f7 50%, #f1796c 100%) fixed;
-    font-size: 20px;
+    font-size: var(--font-size);
     text-align: center;
 }
 
-.container {
-    font-size: 20px;
-    width: max-content;
+.container, .header {
+    font-size: var(--font-size);
+    width: 80%;
+    min-width: 1100px;
     box-sizing: border-box;
     border: solid 3px rgba(246, 224, 193, 0.33);
     background: #FFFFFF55;
     border-radius: 25px;
-    padding: 3% 10% 1% 10%;
+    padding: 1% 10% 1% 10%;
     margin: 7% auto 10% auto;
     backdrop-filter: blur(12px);
+}
+
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-bottom: -6%;
+    font-size: calc(var(--font-size) * 1.7);
+}
+
+@media (max-width: 1116px) {
+    .container, .header {
+        min-width: 400px;
+    }
+}
+@media (max-width: 674px) {
+    .container, .header {
+        margin: 4% auto;
+    }
+    .header {
+        border-radius: 0 0 25px 25px;
+        padding-top: 3%;
+        margin-top: -2%;
+        border-top: none;
+    }
 }
 
 .content {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: nowrap;
+}
+
+@media (max-width: 1116px) {
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: transparent;
+    }
+}
+
+@media (max-width: 674px) {
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 
@@ -40,15 +95,37 @@ body {
     padding: 5%;
 }
 
-.title{
-    font-size: 34px;
-    justify-content: center;
-}
-a{
-    font-size: 24px;
+#logout {
+    margin-right: -30%;
+    text-align: right;
+    font-family: 'BrassMono', serif;
+    font-size: calc(var(--font-size) * 1.2);
     text-decoration: none;
     float: right;
+    background: none;
+    outline: none;
+    border: none;
+    transition: 0.4s;
+    color: #383f75;
 }
+@media (max-width: 1116px) {
+    #logout{
+        margin-right: -20%;
+        margin-left: -10%;
+    }
+}
+@media (max-width: 674px) {
+    #logout{
+        margin-right: -10%;
+        margin-left: -10%;
+    }
+}
+
+#logout:hover {
+    cursor: pointer;
+    color: #ce6e64;
+}
+
 /*----------------------------------------------------------------------*/
 /*График*/
 #chart {
@@ -73,7 +150,7 @@ input[type="button"] {
 
 input[type="submit"], input[type="button"] {
     font-family: 'BrassMono', serif;
-    font-size: 20px;
+    font-size: var(--font-size);
     border: solid 3px #8662c4;
     border-radius: 8px;
     padding: 5px 5px 2px 5px;
@@ -88,7 +165,7 @@ input[type="submit"] {
     padding: 8px;
     margin: 3px;
     font-family: 'BrassMono', serif;
-    font-size: 23px;
+    font-size: calc(var(--font-size) * 1.15);
 }
 
 input[type="submit"]:hover, input[type="submit"]:active, input[type="button"]:hover, input[type="button"]:active {
@@ -201,7 +278,7 @@ tr:hover {
 
 .clear_button {
     font-family: 'BrassMono', serif;
-    font-size: 23px;
+    font-size: calc(var(--font-size) * 1.15);
     width: 100%;
     padding: 10px;
     background: none;
@@ -221,24 +298,28 @@ tr:hover {
 
 /*----------------------------------------------------------------------*/
 /*Алерты*/
-.alert{
+.alert {
     box-sizing: border-box;
     border: solid 3px rgba(246, 224, 193, 0.33);
     background: #FFFFFF99;
     border-radius: 25px;
-    color:#231e2a;
+    color: #231e2a;
 }
-.swal2-confirm, .swal2-cancel{
+
+.swal2-confirm, .swal2-cancel {
     border-radius: 8px !important;
 }
-.swal2-confirm:focus, .swal2-cancel:focus{
+
+.swal2-confirm:focus, .swal2-cancel:focus {
     outline: none !important;
     box-shadow: none !important;
 }
-.swal2-warning, .swal2-icon-content{
+
+.swal2-warning, .swal2-icon-content {
     color: #f1796c !important;
     border-color: #f1796c !important;
 }
+
 /*----------------------------------------------------------------------*/
 /*Фон*/
 

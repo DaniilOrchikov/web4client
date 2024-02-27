@@ -7,12 +7,11 @@ class Form extends Component {
 
     submit_form = (event) => {
         event.preventDefault()
-        console.log(document.getElementById("x"), second_validation(-3, 5, document.getElementById("x")))
         if (second_validation(-3, 5, document.getElementById("x")) && second_validation(-5, 5, document.getElementById("y"))) {
             let x = document.querySelector('#x').value
             let y = document.querySelector('#y').value
             let r = this.props.r
-            PointsService.post_point(x, y, r).then(res => {
+            PointsService.post_point(x, y, r, this.props.keycloak).then(res => {
                 this.props.add_point(new Point(x, y, r, res))
             });
         }
@@ -47,7 +46,6 @@ class Form extends Component {
                 <div className={"form_block"}>
                     <input type={"submit"} value="Send"/>
                 </div>
-                {/*<input type={"button"} onClick={this.handleAction} value="Button"/>*/}
             </form>
         )
     }
